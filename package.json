@@ -1,7 +1,7 @@
 {
   "name": "hydux-data",
-  "version": "0.1.0",
-  "description": "Data-Driven Development for hydux, in the Elm way.",
+  "version": "0.0.0",
+  "description": "Data-driven development for hydux, in the Elm way.",
   "main": "./lib/index.js",
   "typings": "./lib/index",
   "types": "./lib/index",

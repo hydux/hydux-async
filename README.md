@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/hydux/hydux-data.svg?branch=master)](https://travis-ci.org/hydux/hydux-data) [![npm](https://img.shields.io/npm/v/hydux-data.svg)](https://www.npmjs.com/package/hydux-data) [![npm](https://img.shields.io/npm/dm/hydux-data.svg)](https://www.npmjs.com/package/hydux-data)
 
-Data-driven development in hydux, in the Elm way, inspired by apollo-client.
+Data-driven appication in hydux, in the Elm way, inspired by apollo-client.
 
 ## Install
 
@@ -15,7 +15,7 @@ yarn add hydux-data # or npm i hydux-data
 
 This package can make your daily work easier. When you get lot's of views they just render some data from server, with less user interaction, this package will add isLoading flag and fetch error handler automatically for your each fetch function.
 
-Let's we already get a api client, like this fake one, it takes some parameters and return a promise can resolve as a data, or reject as an error (`message` propertie is required and would be used later).
+Let's say we already get an api function, like this fake one, it takes some parameters and return a promise can resolve as a data, or reject as an error (`message` propertie is required and would be used later).
 
 ```ts
 const asyncApi = {
