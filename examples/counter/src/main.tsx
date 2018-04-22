@@ -1,16 +1,14 @@
 import _app from 'hydux'
 import withPersist from 'hydux/lib/enhancers/persist'
-import withReact, { React } from '../../../src/index'
+import withVdom, { React } from 'hydux/lib/enhancers/ultradom-render'
 import { ActionsType } from 'hydux/lib/types'
 import './polyfill.js'
-import Intro from './intro'
-import Counter, { State as CounterState, Actions as CounterActions } from './counter'
-import CounterComp from './comp'
+import * as Counter from './counter'
 
 // let app = withPersist<State, Actions>({
 //   key: 'time-game/v1'
 // })(_app)
-let app = withReact<State, Actions>()(_app)
+let app = withVdom<State, Actions>()(_app)
 
 if (process.env.NODE_ENV === 'development') {
   const devTools = require('hydux/lib/enhancers/devtools').default
@@ -23,25 +21,17 @@ if (process.env.NODE_ENV === 'development') {
 
 const actions = {
   counter1: Counter.actions,
-  counter2: Counter.actions,
 }
 
 const state = {
   counter1: Counter.init(),
-  counter2: Counter.init(),
 }
 
 type Actions = typeof actions
 type State = typeof state
 const view = (state: State) => (actions: Actions) =>
     <main>
-      <h1>Counter1:</h1>
       {Counter.view(state.counter1, actions.counter1)}
-      <h1>Counter2:</h1>
-      {Counter.view(state.counter2, actions.counter2)}
-      <h1>Counter HyduxComponent:</h1>
-      <CounterComp init={10} />
-      <Intro />
     </main>
 
 export default app({

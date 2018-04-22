@@ -1742,10 +1742,6 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-free-style@2.5.1:
-  version "2.5.1"
-  resolved "http://registry.npm.taobao.org/free-style/download/free-style-2.5.1.tgz#5e3f684c470d3bba7e4dbb43524e0a08917e873c"
-
 fresh@0.5.2:
   version "0.5.2"
   resolved "http://registry.npm.taobao.org/fresh/download/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
@@ -2123,11 +2119,12 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/https-browserify/download/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
-hydux@^0.2.0:
-  version "0.2.0"
-  resolved "http://registry.npm.taobao.org/hydux/download/hydux-0.2.0.tgz#3035fb47a4557422a94713de7ec1474effac1b34"
+hydux@^0.4.3:
+  version "0.4.3"
+  resolved "http://registry.npm.taobao.org/hydux/download/hydux-0.4.3.tgz#c1eccba2756199b7ab68c76d3f431cd0fe610e39"
   dependencies:
-    picodom "^1.0.2"
+    tslib "^1.8.1"
+    ultradom "2.0.0"
   optionalDependencies:
     remotedev "^0.2.7"
 
@@ -3338,10 +3335,6 @@ performance-now@^0.2.0:
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
-
-picodom@^1.0.2:
-  version "1.0.2"
-  resolved "http://registry.npm.taobao.org/picodom/download/picodom-1.0.2.tgz#f37c037cb7ce7f3ddced3efe96e5a1c77132c3cd"
 
 pify@^2.0.0:
   version "2.3.0"
@@ -4700,6 +4693,10 @@ tslib@^1.0.0, tslib@^1.7.1:
   version "1.8.1"
   resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.8.1.tgz#6946af2d1d651a7b1863b531d6e5afa41aa44eac"
 
+tslib@^1.8.1:
+  version "1.9.0"
+  resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
+
 tslint-config-standard@^7.0.0:
   version "7.0.0"
   resolved "http://registry.npm.taobao.org/tslint-config-standard/download/tslint-config-standard-7.0.0.tgz#47bbf25578ed2212456f892d51e1abe884a29f15"
@@ -4773,12 +4770,6 @@ typescript@^2.4.2, typescript@^2.6.2:
   version "2.6.2"
   resolved "http://registry.npm.taobao.org/typescript/download/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
-typestyle@^1.5.1:
-  version "1.5.1"
-  resolved "http://registry.npm.taobao.org/typestyle/download/typestyle-1.5.1.tgz#b2c79c4d6d5c6e2cc6bffdc9468665512910b8e5"
-  dependencies:
-    free-style "2.5.1"
-
 uglify-es@^3.2.0:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/uglify-es/download/uglify-es-3.2.1.tgz#93de0aad8a1bb629c8a316f686351bc4d6ece687"
@@ -4822,6 +4813,10 @@ uglifyjs-webpack-plugin@^1.0.1:
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/uid-number/download/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
+
+ultradom@2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/ultradom/download/ultradom-2.0.0.tgz#f1c9e72e762fc21c1024fd6746f12080ea632c3c"
 
 ultron@~1.1.0:
   version "1.1.1"

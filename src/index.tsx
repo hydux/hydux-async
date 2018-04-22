@@ -1,82 +1,123 @@
-import { wrapAction } from 'hydux'
+import { Cmd, ActionType, runAction } from 'hydux'
 
-type Status<A, E = string> = {
-  [K in keyof A]: {
-    isLoading: boolean,
-    error: E,
-    data: any
-  }
+export type ParamValue<A, D> = {
+  api: A,
+  init: D,
+  handleStart?: (key: string) => void,
+  /** override default success handler action */
+  handleSuccess?: (key: string, data: D) => any,
+  /** override default error handler action */
+  handleError?: (key: string, err: Error) => any,
+}
+export type Param = { [k: string]: ParamValue<any, any> }
+
+export type LoadApi<P extends Param> = {
+  [k in keyof P]: P[k]['api']
+} & {
+  /** Enable auto set loading flag before fetching */
+  enableLoadingFlag(): void
+  /** Disbale auto set loading flag before fetching */
+  disableLoadingFlag(): void
+}
+export type apiStatus<A extends Param, k extends keyof A> = {
+  isLoading: boolean
+  error: string
+  rawError: any | null
+  data: A[k]['init']
+}
+export type LoadState<A extends Param> = {
+  [k in keyof A]: apiStatus<A, k>
 }
 
-type AsyncActions = {
-  handleFulfilled: (name: string, data: any) => (state) => any,
-  handleRejected: (name: string, err: Error) => (state) => any,
-}
-type AsyncState<A, E = string> = { status: Status<A, E> }
+const makeKey = (name: string) => `@hydux-data/${name}`
 
-type AsyncResult<A, E = string> = {
-  init: () => AsyncState<A, E>,
-  actions: A & AsyncActions,
-}
-
-function async<A, E = string>(
-  a: A,
-  options: {
-    parseError?: (err: Error) => E,
-  } = {},
-): AsyncResult<A> {
-  const {
-    parseError = (err: Error) => err.message as any as E,
-  } = options
-  let keys = Object.keys(a)
-  let i = keys.length
-  let actions = {} as (AsyncActions & A)
-  let initState = { status: {} } as AsyncState<A>
-  while (i--) {
-    const k = keys[i]
-    const action = a[k]
-    initState[k] = {
-      isLoading: false,
-      error: '',
-      data: null,
-    }
-    actions[k] = (...args) => wrapAction(action, (action, _, __, state: AsyncState<A, E>, actions: AsyncActions) => {
-      const [nextState, cmd] = action(...args)
-      if (cmd.length > 1) {
-        console.error('[hydux-async]', 'Batched cmds in async actions might cause bugs!', k, actions)
-        throw new TypeError(`[hydux-async] Invalid async action: ` + k)
+export default function Loadable<P extends Param>(
+  param: P
+): {
+  actions: LoadApi<P>,
+  state: LoadState<P>,
+} {
+  const state: LoadState<P> = {} as any
+  const HandlerSuccess = makeKey('handleSuccess')
+  const HandlerError = makeKey('handleError')
+  const HandlerStart = makeKey('handleStart')
+  const LoadingFlagDisabled = makeKey('loadingFlagDisabled')
+  const actions: any = {
+    [HandlerSuccess]: (key, data) => (state, actions) => ({
+      ...state,
+      [key]: {
+        isLoading: false,
+        rawError: null,
+        data,
+        error: '',
       }
-      return [nextState, cmd.map(cmd => _ => {
-        const ret = cmd(_)
-        if (ret && (ret instanceof Promise)) {
-          ret
-            .then(_ => (actions.handleFulfilled(k, _), _))
-            .catch(err => actions.handleRejected(k, err))
-        }
-        return ret
-      })]
-    })
-  }
-  actions.handleFulfilled = (name: string, data: any) => (state: AsyncState<A>) => {
-    return {
+    }),
+    [HandlerError]: (key, error) => (state, actions) => ({
       ...state,
-      status: {
-        ...(state.status as any),
-        [name]: { isLoading: false, error: '', data }
-      },
+      [key]: {
+        ...state[key],
+        isLoading: false,
+        rawError: error,
+        error: error.message,
+      }
+    }),
+    [HandlerStart]: (key) => (state, actions) => ({
+      ...state,
+      [key]: {
+        ...state[key],
+        isLoading: true,
+        rawError: null,
+        error: '',
+      }
+    }),
+    enableLoadingFlag: () => state => ({
+      ...state,
+      [LoadingFlagDisabled]: false,
+    }),
+    disableLoadingFlag: () => state => ({
+      ...state,
+      [LoadingFlagDisabled]: true,
+    }),
+  }
+  for (const key in param) {
+    const info = param[key]
+    state[key] = {
+      error: '',
+      data: info.init,
+      isLoading: false,
+      rawError: null,
     }
-  }
-  actions.handleRejected = (name: string, err: Error) => (state: AsyncState<A>) => {
-    return {
-      ...state,
-      status: {
-        ...(state.status as any),
-        [name]: { isLoading: false, error: parseError(err) },
-      },
+    actions[key] = (...args) => (state, actions, ps, pa) => {
+      const runCustomAction =
+        result => runAction(result, state, actions, ps, pa)
+      return [
+        state,
+        Cmd.batch(
+          state[LoadingFlagDisabled]
+            ? Cmd.none
+            : Cmd.ofSub(
+                () =>
+                  info.handleStart
+                    ? runCustomAction(info.handleStart(key))
+                    : actions[HandlerStart](key)
+              ),
+          Cmd.ofPromise(
+            () => info.api(...args),
+            data =>
+              info.handleSuccess
+                ? runCustomAction(info.handleSuccess(key, data))
+                : actions[HandlerSuccess](key, data),
+            (err: Error) =>
+              info.handleError
+                ? runCustomAction(info.handleError(key, err))
+                : actions[HandlerError](key, err),
+          )
+        )
+      ]
     }
   }
   return {
-    init: () => initState,
+    state,
     actions,
   }
 }

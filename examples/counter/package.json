@@ -27,7 +27,6 @@
     "webpack-dev-server": "^2.9.5"
   },
   "dependencies": {
-    "hydux": "^0.2.0",
-    "typestyle": "^1.5.1"
+    "hydux": "^0.4.3"
   }
 }

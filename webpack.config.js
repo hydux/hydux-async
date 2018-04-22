@@ -9,7 +9,7 @@ const DIST = `${__dirname}/static/dist`
 
 module.exports = module.exports = {
   entry: {
-    'react': "./src/index.tsx",
+    'data': "./src/index.tsx",
   },
   output: {
       filename: "hydux.[name].js",
@@ -23,7 +23,10 @@ module.exports = module.exports = {
 
   resolve: {
       // Add '.ts' and '.tsx' as resolvable extensions.
-      extensions: [".ts", ".tsx", ".js", ".json"]
+      extensions: [".ts", ".tsx", ".js", ".json"],
+  },
+  externals: {
+    hydux: 'hydux.core'
   },
 
   module: {
@@ -32,13 +35,8 @@ module.exports = module.exports = {
           { test: /\.tsx?$/,
             use: {
               loader: "awesome-typescript-loader",
-              query: {
-                configFileName: "./tsconfig.2015.json"
-              }
             },
           },
-          // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-          { enforce: "pre", test: /\.js$/, use: "source-map-loader" }
       ]
   },
 

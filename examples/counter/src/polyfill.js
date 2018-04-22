@@ -1,5 +1,5 @@
 // @ts-nocheck
-const noop = f => f
+const noop = function (){}
 window.localStorage = window.localStorage || {
   setItem: noop,
   getItem: noop,

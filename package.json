@@ -1,22 +1,24 @@
 {
-  "name": "hydux-react",
-  "version": "0.2.2",
-  "description": "React enhancer for hydux, hydux is an elm-like state manager inspired by Hyperapp, Elmish, Elm, Redux, etc. Working with any vdom library!",
+  "name": "hydux-data",
+  "version": "0.0.0",
+  "description": "Data-Driven Development for hydux, in the Elm way.",
   "main": "./lib/index.js",
   "typings": "./lib/index",
   "types": "./lib/index",
   "scripts": {
-    "build": "del lib && tsc -d -t es5",
+    "build": "del lib && tsc",
     "build:dist": "webpack -p --progress --profile",
-    "test": "mocha --require espower-typescript/guess \"src/test/**/*.ts\"",
+    "test": "mocha --require ts-node/register \"src/test/**/*.test.ts\"",
     "test:watch": "npm run test -- -w --watch-extensions ts,tsx",
     "doc": "typedoc --theme minimal --out ./docs --exclude ./test ./src && touch ./docs/.nojekyll",
     "preversion": "npm run build && npm run build:dist && git add -A"
   },
-  "pre-commit": [],
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hydux/hydux-react.git"
+    "url": "git+https://github.com/hydux/hydux-data.git"
   },
   "keywords": [
     "elm",
@@ -29,24 +31,21 @@
   "author": "Zack Young",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hydux/hydux-react/issues"
+    "url": "https://github.com/hydux/hydux-data/issues"
   },
-  "homepage": "https://github.com/hydux/hydux-react#readme",
+  "homepage": "https://github.com/hydux/hydux-data#readme",
   "devDependencies": {
     "@types/mocha": "^2.2.44",
     "@types/node": "^8.0.56",
-    "@types/react": "^16.0.32",
     "awesome-typescript-loader": "^3.4.1",
     "clean-webpack-plugin": "^0.1.17",
     "cross-env": "^5.1.1",
     "debug": "^3.1.0",
     "del-cli": "^1.1.0",
-    "espower-typescript": "^8.1.2",
     "mocha": "^4.0.1",
     "power-assert": "^1.4.4",
     "pre-commit": "^1.2.2",
-    "source-map-loader": "^0.2.3",
-    "timekeeper": "^2.0.0",
+    "ts-node": "^6.0.0",
     "tslint": "^5.8.0",
     "tslint-config-standard": "^7.0.0",
     "typedoc": "^0.9.0",
@@ -54,6 +53,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "hydux": "^0.2.7"
+    "hydux": "^0.4.3",
+    "tslib": "^1.9.0"
   }
 }
