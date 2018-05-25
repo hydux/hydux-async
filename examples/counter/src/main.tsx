@@ -29,7 +29,7 @@ const state = {
 
 type Actions = typeof actions
 type State = typeof state
-const view = (state: State) => (actions: Actions) =>
+const view = (state: State, actions: Actions) =>
     <main>
       {Counter.view(state.counter1, actions.counter1)}
     </main>

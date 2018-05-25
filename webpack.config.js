@@ -7,7 +7,7 @@ const IS_DEV = process.env.NODE_ENV === 'development'
 
 const DIST = `${__dirname}/static/dist`
 
-module.exports = module.exports = {
+module.exports = {
   entry: {
     'data': "./src/index.tsx",
   },

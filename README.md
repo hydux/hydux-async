@@ -13,7 +13,7 @@ yarn add hydux-data # or npm i hydux-data
 
 ## Usage
 
-This package can make your daily work easier. When you get lot's of views they just render some data from server, with less user interaction, this package will add isLoading flag and fetch error handler automatically for your each fetch function.
+This package can make your daily work easier. When you get lot's of views which just rendering some data from server, with less user interaction, this package will add isLoading flag and fetch error handler automatically for your each fetch function.
 
 Let's say we already get an api function, like this fake one, it takes some parameters and return a promise can resolve as a data, or reject as an error (`message` propertie is required and would be used later).
 
