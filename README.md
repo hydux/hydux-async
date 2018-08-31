@@ -8,7 +8,7 @@ Data-driven appication in hydux, in the Elm way, inspired by apollo-client.
 ## Install
 
 ```sh
-yarn add hydux-data # or npm i hydux-data
+yarn add hydux hydux-data # or npm i hydux hydux-data
 ```
 
 ## Usage
